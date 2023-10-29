@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import LeftImage from '../../assets/undraw_authentication_re_svpt 1.png'
 
@@ -92,7 +92,34 @@ const Heading = styled.h3`
   margin-bottom: 10px;
 `;
 
+const PasswordContainer = styled.div`
+  position: relative;
+`;
+
+const EyeIcon = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+`;
+
+
 const Login = () => {
+
+    const [email,setEmail]=useState("")
+    const [password,setPassword]=useState("")
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const submitHandler=()=>{
+        console.log("email",email)
+        console.log("password",password)
+    }
+
     return (
         <Container>
             <LeftSide>
@@ -102,9 +129,18 @@ const Login = () => {
                 <h2 style={{ textAlign: "center", marginTop: "100px" }}>Login</h2>
                 <form>
                     <Heading>Email or Phone</Heading>
-                    <Input type="text" placeholder="Enter your email or phone" />
+                    <Input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Enter your email or phone" />
                     <Heading>Password</Heading>
-                    <Input type="password" placeholder="Enter your password" />
+                    <Input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Enter your password" />
+
+                    {/* <PasswordContainer>
+            <Heading>Password</Heading>
+            <Input type={showPassword ? "text" : "password"} placeholder="Enter your password" />
+            <EyeIcon onClick={togglePasswordVisibility}>
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </EyeIcon>
+        </PasswordContainer> */}
+
                     <ResetPasswordLink style={{ color: '#ff6600' }}>Forgot your password? Reset it here.</ResetPasswordLink>
                     <CheckBoxContainer>
                         <input type="checkbox" id="rememberMe" />
@@ -114,7 +150,7 @@ const Login = () => {
                         <input type="checkbox" id="termsAndConditions" />
                         <CheckBoxLabel htmlFor="termsAndConditions">Agree to Terms and Conditions</CheckBoxLabel>
                     </CheckBoxContainer>
-                    <Button type="submit">Login</Button>
+                    <Button onClick={submitHandler} >Login</Button>
                 </form>
                 <RegisterLink style={{ color: '#ff6600' }}>Don't have an account? Register me</RegisterLink>
             </RightSide>
